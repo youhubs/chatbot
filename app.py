@@ -16,6 +16,10 @@ app.register_error_handler(404, page_not_found)
 
 @app.route('/', methods = ['POST', 'GET'])
 def index():
+    """Return the homepage and render questions and answers."""
+    if request.method == 'POST':
+        question = request.form.get('prompt')
+        return jsonify({'answer': aiapi.getChatResponse(question)}), 200
     return render_template('index.html', **locals())
 
 
